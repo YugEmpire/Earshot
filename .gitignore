@@ -1,0 +1,10 @@
+earshot.db
+earshot.db-*
+hook.log
+.venv/
+.tts/
+tts_server.py
+__pycache__/
+*.pyc
+*.bak
+*.wav
