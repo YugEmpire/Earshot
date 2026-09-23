@@ -267,9 +267,15 @@ def speech_status():
     except Exception:
         out.append(("speech input (Whisper)", False, "not installed"))
 
-    model_dir = os.path.join(os.path.expanduser("~"), ".cache", "huggingface")
-    out.append(("Whisper model downloaded", os.path.isdir(model_dir),
-                "ready" if os.path.isdir(model_dir) else "downloads on first use"))
+    # The model only matters if Whisper can actually run. Reporting "ready"
+    # because some unrelated HuggingFace cache exists is a false OK - it told a
+    # user speech was set up while speech input was not installed at all.
+    have_whisper = out[0][1]
+    model_dir = os.path.join(os.path.expanduser("~"), ".cache", "huggingface", "hub")
+    have_model = have_whisper and os.path.isdir(model_dir)
+    out.append(("Whisper model downloaded", have_model,
+                "ready" if have_model else
+                ("downloads on first use" if have_whisper else "comes with speech input")))
     out.append(("natural voice (Kokoro)",
                 os.path.exists(TTS_PY) and os.path.exists(TTS_SERVER),
                 "ready" if os.path.exists(TTS_PY) else "not installed"))
@@ -397,7 +403,7 @@ def run_ui():
             box.insert("end", f"{'  OK  ' if ok else ' FAIL '} {name:<22} {detail}\n")
             bad += not ok
         box.insert("end", "\n" + ("Everything is ready.\n" if not bad
-                                  else f"{bad} thing(s) need fixing before you start.\n"))
+                                  else f"Still to fix: {bad}\n"))
     tk.Button(tab2, text="Check again", command=refresh).pack(pady=8)
     refresh()
 
@@ -462,6 +468,15 @@ def run_ui():
 
     tk.Button(tab3, text="Start listening", width=20, height=2,
               command=start_listener).pack(anchor="w")
+
+    # Land on the tab that needs attention. Opening on Coding tools shows a
+    # complete-looking screen: a user installs their editor, presses Run, and
+    # hears nothing, because speech was never installed and nothing said so.
+    try:
+        if not all(ok for _n, ok, _d in speech_status()):
+            nb.select(tab_s)
+    except Exception:
+        pass
 
     root.mainloop()
 
