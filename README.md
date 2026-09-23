@@ -59,6 +59,12 @@ Windows, Python 3.11 or newer.
 
 docs/setup-guide.md has per-tool detail and troubleshooting.
 
+Windows will warn that "the publisher could not be verified" — it does this for
+any downloaded script that isn't code-signed. Earshot listens to your
+microphone and sits in front of every command your agent runs, so being wary
+here is correct. Everything it does is in 15 readable Python files, and
+Earshot Setup.bat is four lines. Read them before you click Run.
+
 ## Built on
 
 faster-whisper (MIT) for speech recognition, Kokoro (Apache 2.0) for speech.
