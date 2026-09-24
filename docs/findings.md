@@ -41,19 +41,26 @@ clear 60% of decisions to be worth building.
 
 Measured: **25–27%**.
 
-The reason is structural. A frequency analysis of the full decision log shows
-the shape of agent work:
+The reason is structural. A frequency count over the log - 225
+human-answered decisions covering 138 distinct actions - shows the shape
+of agent work:
 
-- two commands dominate — a typecheck and a test run, at 28 and 23 sightings
-- a handful of actions appear 3–5 times
-- roughly **130 actions appear exactly once**
+| times an action occurred | number of actions |
+|---|---|
+| 28 | 1 (typecheck) |
+| 23 | 1 (test run) |
+| 3-5 | 12 |
+| 2 | 6 |
+| **1** | **118** |
 
-**About 75% of an agent's actions are one-offs.** Each new file, each new test,
-each new module. Repetition lives almost entirely in the build-and-test loop.
+**118 of 138 distinct actions - 86% - happened exactly once.** Each new
+file, each new test, each new module. Repetition lives almost entirely in
+the build-and-test loop.
 
-No repetition-based rule can ever touch the other three quarters. Two
-independent methods — a policy sweep over the logs, and a direct count of
-repeats — produced the same ceiling.
+That sets a hard ceiling. A rule that stops asking once you have approved
+something twice can only ever clear the sightings past the second one: 67
+of 225 decisions, or **30%**. Measured safe auto-clear was 25-27% - two
+independent methods landing in the same place.
 
 That killed the original thesis and replaced it with a better one: **scope
 pre-approval**. One spoken decision covering a phase of routine work

@@ -1,4 +1,4 @@
-﻿# Earshot
+# Earshot
 
 Your AI coding agent asks before it acts. Out loud. You answer by speaking.
 Hands stay off the keyboard.
@@ -41,9 +41,10 @@ Approval latency on the same work, same person, voice the only variable:
 
 One session ran 45 decisions fully hands-free, 100% answered by voice.
 
-Also measured, and it killed the original design: about 75% of an agent''s
-actions are one-offs, so no "you approved this before" rule clears more than
-roughly a quarter of them. See docs/findings.md.
+Also measured, and it killed the original design: 118 of 138 distinct
+actions happened exactly once. A "you approved this before" rule can
+therefore clear at most 30% of prompts; measured, it cleared 25-27%.
+See docs/findings.md.
 
 Sample sizes 17-45, one user, sequential arms. Directional, not conclusive.
 
